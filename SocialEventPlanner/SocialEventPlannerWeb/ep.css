@@ -1,0 +1,39 @@
+﻿
+.goodStatus {
+    color: green;
+}
+
+.badStatus {
+    color: red;
+}
+
+.eventTitle {
+}
+
+.eventActionLink:hover {
+    cursor: pointer;
+}
+
+.eventSiteLink:hover {
+    cursor: pointer;
+}
+
+.eventTbl {
+}
+
+.eventCellTitle {
+}
+
+.eventCellData {
+}
+
+.hiddenDiv {
+    display: none;
+}
+
+.visibleDiv {
+    display: inline;
+}
+
+.eventDateTxt {
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="RootModule">
+    <File Path="AppIcon.png" Url="AppIcon.png" ReplaceContent="TRUE" />
+    <File Path="app.config" Url="app.config" ReplaceContent="TRUE" />
+  </Module>
+</Elements>

@@ -1,0 +1,184 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="CortanaSocialEvents.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True" 
+    xmlns:local="clr-namespace:CortanaSocialEvents" >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#FF0086D8">
+
+        <phone:Panorama>
+
+            <phone:PanoramaItem Header="Social Events">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="90"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.Resources>
+                        <DataTemplate x:Name="eventListTemplate">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Orientation="Vertical" 
+                                            Grid.Column="0"
+                                            Grid.Row="0">
+                                    <Image  
+                                        Width="100" Height="100" Stretch="UniformToFill" 
+                                        Source="/Assets/events.png"/>
+
+                                    <TextBlock 
+                                        Text="{Binding EventDate}" 
+                                        Style="{StaticResource EventDateText}" 
+                                        Foreground="White" />
+                                </StackPanel>
+                                
+                                <TextBlock x:Name="EventNameTxt" Grid.Column="1" Grid.Row="0" 
+                                    Text="{Binding EventName}" 
+                                    Tag="{Binding ObjectGraphUrl}" 
+                                    Style="{StaticResource EventNameText}" 
+                                    Foreground="White" 
+                                    Tap="EventNameTxt_Tap"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </Grid.Resources>
+
+                    <Border Grid.Row="0" Name="WaitBorder"
+                        CornerRadius="20" Opacity="0.8" Height="200" Width="350" 
+                        BorderBrush="White" BorderThickness="4" />
+
+                    <TextBlock Name="WaitTxt" Grid.Row="0" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" FontSize="26" TextWrapping="Wrap" 
+                        Opacity="1" Foreground="White" 
+                        Text="I await your command..." MaxWidth="320"/>
+
+                    <Image x:Name="WaitImg" Source="/Assets/events.png" 
+                           Height="180" Margin="-280,-230,0,0" />
+                    
+                    <!-- actual list content goes here -->
+                    <ListBox Name="EventsLst" Grid.Row="0"
+                                ItemTemplate="{StaticResource eventListTemplate}" 
+                                ItemsSource="{Binding}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+                    <Canvas x:Name="SearchArea" Grid.Row="1" Height="90" Width="480" 
+                            Background="#FF908F8F" Margin="-12,0,0,0">
+                        <ProgressBar x:Name="SearchProgressBar" IsIndeterminate="True" Canvas.Top="0" Canvas.Left="0" Height="8" Width="480" Visibility="Collapsed" />
+                        <TextBox x:Name="SearchTextBox" Canvas.Left="-9" Canvas.Top="-5" Width="410" Height="104" Padding="12,16,12,0" FontSize="24" FontStyle="Italic" TextWrapping="Wrap" IsReadOnly="True" />
+                        <Canvas x:Name="SpeechActionButtonContainer" Canvas.Top="7" Canvas.Left="394" Height="80" Width="80" Tap="SpeechActionButtonContainer_Tap">
+                            <Image x:Name="SpeechActionButtonMicrophone" Width="80" Height="80" Source="/Assets/CortanaMicrophone.png"/>
+                            <Rectangle x:Name="SpeechActionButtonGoBackingRect" Width="40" Height="40" Margin="20,20" Fill="{StaticResource PhoneAccentBrush}" Opacity="0" />
+                            <Image x:Name="SpeechActionButtonGo" Width="80" Height="80" Source="/Assets/CortanaGo.png" Opacity="0" />
+                            <Border x:Name="SpeechActionButtonStopBorder" Width="80" Height="80" BorderBrush="{StaticResource PhoneForegroundBrush}" BorderThickness="1" Opacity="0" />
+                            <Rectangle x:Name="SpeechActionButtonStop" Fill="{StaticResource PhoneAccentBrush}" Width="80" Height="80" Opacity="0">
+                                <Rectangle.OpacityMask>
+                                    <ImageBrush ImageSource="/Assets/SDK/stop.png"/>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </Canvas>
+                    </Canvas>
+                </Grid>
+
+            </phone:PanoramaItem>
+
+            <phone:PanoramaItem Header="Yammer">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.Resources>
+                        <local:YammerDateConverter x:Key="YammerDateConverter" />
+                        <local:YammerExcerptConverter x:Key="YammerExcerptConverter" />
+                        
+                        <DataTemplate x:Name="yammerListTemplate">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Orientation="Vertical" 
+                                            Grid.Column="0"
+                                            Grid.Row="0">
+                                    <Image  
+                                        Width="100" Height="100" Stretch="UniformToFill" 
+                                        Source="/Assets/YammerWhite.png"/>
+
+                                    <TextBlock 
+                                        Text="{Binding CreatedAt, Converter={StaticResource YammerDateConverter}}" 
+                                        Style="{StaticResource EventDateText}" 
+                                        Foreground="White" />
+                                    
+                                </StackPanel>
+
+                                <TextBlock x:Name="EventNameTxt" Grid.Column="1" 
+                                    Grid.Row="0" 
+                                    Text="{Binding ContentExcerpt, Converter={StaticResource YammerExcerptConverter}}" 
+                                    Tag="{Binding WebUrl}" 
+                                    Style="{StaticResource YammerDetailsText}" 
+                                    Foreground="White" 
+                                    Tap="EventNameTxt_Tap"/>
+                                
+                                <Line Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                      Stretch="Fill" HorizontalAlignment="Center" 
+                                      StrokeThickness="2" VerticalAlignment="Center" 
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round" 
+                                      Stroke="White" X2="400" />
+                                
+                            </Grid>
+                        </DataTemplate>
+                    </Grid.Resources>
+
+                    <!-- actual list content goes here -->
+                    <ListBox Name="YammerLst" Grid.Row="0"
+                                ItemTemplate="{StaticResource yammerListTemplate}" 
+                                ItemsSource="{Binding}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                    
+                </Grid>
+                
+            </phone:PanoramaItem>
+
+        </phone:Panorama>
+        
+    </Grid>
+
+</phone:PhoneApplicationPage>

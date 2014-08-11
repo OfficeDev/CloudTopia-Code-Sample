@@ -1,0 +1,2 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="31154949-6f43-4283-a923-176589c690e3" solutionId="31154949-6f43-4283-a923-176589c690e3" resetWebServer="false" sharePointProductVersion="15.0" name="SocialEventPlanner" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel" />

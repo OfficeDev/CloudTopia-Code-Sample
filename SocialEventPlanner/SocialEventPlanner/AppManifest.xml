@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--Created:cb85b80c-f585-40ff-8bfc-12ff4d0e34a9-->
+<App xmlns="http://schemas.microsoft.com/sharepoint/2012/app/manifest"
+     Name="SocialEventPlanner"
+     ProductID="{b23c6e86-66f2-4ea6-9072-a72afc43c553}"
+     Version="1.0.0.0"
+     SharePointMinVersion="15.0.0.0"
+>
+  <Properties>
+    <Title>Social Event Planner</Title>
+    <StartPage>~remoteAppUrl/Pages/Default.aspx?{StandardTokens}</StartPage>
+    <InstalledEventEndpoint>~remoteAppUrl/Services/AppEventReceiver.svc</InstalledEventEndpoint>
+  </Properties>
+
+  <AppPrincipal>
+    <RemoteWebApplication ClientId="*" />
+  </AppPrincipal>
+  <AppPermissionRequests AllowAppOnlyPolicy="true" >
+    <AppPermissionRequest Scope="http://sharepoint/content/tenant" Right="FullControl" />
+  </AppPermissionRequests>
+</App>
